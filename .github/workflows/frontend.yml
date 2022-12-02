@@ -2,7 +2,7 @@ name: GitHub Action flow to Docker hub
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build-push-images:
@@ -16,21 +16,21 @@ jobs:
 
       - name: Buildx set-up
         id: buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v1
 
       - name: Login to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-
       - name: Build and push
         id: docker_build
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v2
         with:
           context: ./
           file: ./dockerfile.v1
           push: true
-          tags: 30james00/lab6:ghfront1
+          tags: |
+            30james00/lab6:ghfront1
           
